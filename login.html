@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student</title>
+	<style type="text/css">
+
+		.container {
+
+			margin: auto ; 
+		}
+
+	</style>
+	<script>
+		function check() 
+		{
+			var username = document.getElementById("username").value;
+			console.log(username) ;
+			var password = document.getElementById("password").value;
+			console.log(password) ;
+			if (username=="admin" && password=="admin")
+			{
+				return true ;
+			}
+			else 
+				return false ;
+
+		}
+	</script>
+</head>
+<body>
+	<form action="onLogin.html" method="post" onsubmit="return check();">
+		<div id='container'>
+		<label>UserName <input type="text" id="username" name="username" ></label><br><br>
+		<label>Password <input type="password" id="password" name="password" ></label>
+		<br>
+		<br>
+		<input type="submit" name="btn">
+		<label id='lb'></label>
+	</div>	
+		
+	</form>
+	
+	
+</body>
+</html>
