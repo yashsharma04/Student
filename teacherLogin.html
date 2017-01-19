@@ -3,24 +3,29 @@
 <head>
 	<title>Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="css/onLogin.css">
-	<script src="js/onLogin.js"></script>
+	<script type="text/javascript" src='js/teacherLogin.js'></script>
 </head>
 <body>
 	<div class='header'  data-position="fixed" >
-		<!-- write teacher name  -->
-		<p class='admin' ></p>
+		<!-- write teacher name  --> 
+		<p class='admin' id='name'></p>
 		<a href="login.html" class='logout'>Logout</a>
 	</div>
 	<nav>
+	<img src="img/profile.jpg" width="170" height="150" alt="Profile Photo">
 	  <ul>
-	    <li>
-	    <button class="btnlist" onclick="gotoHome()" type="button">Home</button>
-	    <!-- <a class='btnlist' href="#">Show Departments</a> -->
-	    </li>
-	    <li><button class="btnlist" type="button">Random 1</button></li>
-	    <li><button class="btnlist" onclick="showTeachers()" type="button">Random 2 </button></li>
+	    <li><button class="btnlist" onclick="changePassword()" type="button">Change Password</button></li>
+	    <!-- <li><button class="btnlist" type="button">Random 1</button></li> -->
+	    <!-- <li><button class="btnlist" onclick="showTeachers()" type="button">Random 2 </button></li> -->
 	  </ul>		
 	</nav>
+
+	<div classs='main_content'>	
+		<label>Name: </label><label id="teacher_name"></label><br><br>
+		<label>Department: </label><label id="dept_name"></label><br><br>
+		<label>Subjects Teaching</label><label id="subjects"></label><br><br>
+		<label>UserName :</label><label id="username"></label><br><br>
+	</div>
 
 
 
