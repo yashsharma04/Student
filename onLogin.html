@@ -2,161 +2,85 @@
 <html>
 <head>
 	<title>Admin</title>
-
-	<script>
-
-		document.addEventListener("DOMContentLoaded", function(event) { 
-
-				if (localStorage.getItem("arr1")==undefined)
-				{
-					console.log("inside undefined");
-					var arr1 = [] ;
-					// arr1.push({"name":"Yash"});
-					console.log(arr1.length);
-					console.log('arr1',arr1);
-					localStorage.setItem("arr1",JSON.stringify(arr1)); 
-				}
-				else 
-				{
-					var arr1 = JSON.parse(localStorage.getItem("arr1"));
-					var len = arr1.length;
-					for(var i =0 ; i<len;i++)
-					{
-						document.getElementById("content").innerHTML=document.getElementById("content").innerText+"\n"+arr1[i];	
-					}
-				}
-				document.getElementById("dep").style.display= "none";
-				document.getElementById("tea").style.display= "none";
-				document.getElementById("sub").style.display= "none";
-				document.getElementById("subd").style.display= "none";
-				document.getElementById("subt").style.display= "none";
-				document.getElementById("subs").style.display= "none";
-				document.getElementById("select").style.display= "none";
-
-
-		});
-		 
-		function dep() 
-		{
-			document.getElementById("dep").style.display= "block" ;
-			document.getElementById("subd").style.display= "block" ;
-
-			
-		}
-		function tea()
-		{
-			document.getElementById("tea").style.display= "block" ;
-			document.getElementById("subt").style.display= "block";
-		}
-		function sub()
-		{
-			document.getElementById("sub").style.display= "block" ;
-			document.getElementById("subs").style.display= "block";
-			document.getElementById("select").style.display= "block";
-			var select = document.getElementById("select");
-			var subject = document.getElementById("sub");
-			var arr = JSON.parse(localStorage.getItem("arr1"));
-			
-			for(var i =0 ; i<arr.length;i++)
-			{
-				var option = document.createElement("option");
-				option.textContent = arr[i];
-				select.appendChild(option);
-			}
-
-		}
-
-		function subd() 
-		{
-			var department = document.getElementById("dep").value;
-			if (typeof(Storage) !== "undefined") 
-			{
-				
-			    var yash =JSON.parse(localStorage.getItem("arr1")) ;
-
-			    yash.push(department);
-			    localStorage.setItem("arr1",JSON.stringify(yash));
-			    window.open("onLogin.html","_self");
-			} 
-			else 
-			{
-			    document.getElementById("content").innerHTML = "Sorry, your browser does not support Web Storage...";
-			}
-		}
-		function subt() 
-		{
-			var teacher = document.getElementById("tea").value;
-			
-			if (typeof(Storage) !== "undefined") 
-			{
-				
-			    var arr = JSON.parse(localStorage.getItem("arr"));
-			    arr.push(teacher);
-			    localStorage.setItem("arr",arr.stringify);
-			    
-			} 
-			else
-			{
-			    document.getElementById("content").innerHTML = "Sorry, your browser does not support Web Storage...";
-			}
-		}
-		function subs()
-		{
-			if (localStorage.getItem("subarray")==undefined)
-			{
-				var subarray = JSON.parse(localStorage.getItem("subarray"));
-				var subjectValue  = document.getElementById("sub").value ;
-				
-
-				var e = document.getElementById("select");
-				var department = e.options[e.selectedIndex].value;
-
-
-				var subarray ={};
-				var subjects = [];
-				subarray.subjects = subjects ;
-				var subject = {
-								  "subName": subjectValue,
-								  "department": department
-								}
-				subarray.subjects.push(subject);
-				localStorage.setItem("subarray",JSON.stringify(subarray));
-			}
-
-
-
-		}
-	</script>
+	<link rel="stylesheet" type="text/css" href="css/onLogin.css">
+	<script src="js/onLogin.js"></script>
 </head>
-
 <body>
-
-	<button type="button" id='btn1' onclick="return dep();" >Add Department</button>
-	<br>
-	<br>
-	<button type="button" id='btn2' onclick="return tea();" >Add Teachers</button>
-	<br><br>
-	<button type="button" id='btn3' onclick="return sub();">Add Subjects </button>
-	<input type="text" id="dep" name="dep" placeholder="Add a Department ">
-	<button type="button" id='subd' onclick="subd()" >Submit Department</button>
-	<br><br>
-	<input type="text" id="sub" name="sub" placeholder="Add a Subject ">
-	<br><br>
-	<button type="button" id='subs' onclick="subs()" >Submit Subject</button>
-	<select id='select'>
-		
-	</select>
-	
-	<br>
-	<br>
-	
-
-	<input type="text" id="tea" name="tea" placeholder="Add a Teacher ">
-	<button type="button" id='subt'>Submit Teacher</button>
-
-	<div id='content'>
+	<div class='header'  data-position="fixed" >
+		<p class='admin' >Admin</p>
+		<a href="login.html" class='logout'>Logout</a>
 		
 	</div>
+	<nav>
+	  <ul>
+	    <li>
+	    <button class="btnlist" onclick="gotoHome()" type="button">Home</button>
+	    <!-- <a class='btnlist' href="#">Show Departments</a> -->
+	    </li>
+	    <li><button class="btnlist" type="button">Show Subjects</button></li>
+	    <li><button class="btnlist" onclick="showTeachers()" type="button">Show Teachers</button></li>
+	  </ul>
+	
+	</nav>
+	<div id='mainContent'>
+		<button type="button" id='btn1' class='btn' onclick="return dep();" >Add Department</button>
+		<br><br>
+		<button type="button" id='btn2' class='btn' onclick="return tea();" >Add Teachers</button>
+		<br><br>
+		<button type="button" id='btn3'  class='btn' onclick="return sub();">Add Subjects </button>
+		<br><br>
+		<input type="text" id="dep" name="dep" placeholder="Add a Department ">
+		<br><br>
+		<button type="button" id='subd'  class='btn' onclick="subd()" >Submit Department</button>
+		<br><br>
+		<input type="text" id="sub" name="sub" placeholder="Add a Subject ">
+		<br><br>
+		<button type="button" id='subs' class='btn' onclick="subs()" >Submit Subject</button>
+		<br>
+		<select id='select'></select>
+		<br><br>
+		<input type="text" id="tea" name="tea" placeholder="Add a Teacher ">
+		<br>
+		<br>
+		<select id="select_departments" onchange="change_subjects(this)"> 
+		</select>
+		<select id='select_subjects'>
+		</select>
+		<br><br>
+		<button type="button" class='btn' onclick="subt()" id='subt'>Submit Teacher</button>
+		<div id='content'>
+		</div>
+	</div>
+	<div id='showTeacher'>
+		<button type="button" onclick="byDepartment(this)" class='btn' >By Department</button>
+		<button type="button" onclick="bySubject()" class='btn'>By Subject</button>
+
+	</div>
+	<br>
+	<br>
+	<div id='onlyDepartment'>
+		<select id="dd" onchange="onDepartmentChange()">
+		</select>
+		<br><br>
+		<table id='table'>
+			<thead>
+				<tr>
+					<th>Department</th>
+					<th>Teacher Name</th>
+				</tr>
+			</thead>
+			<tbody id='body'>
+
+			</tbody>
+		</table>
+	</div>
+
+	<div id='onlySubject'>
+		<select id="ss">
+			<option></option>
+		</select>
+	</div>
+
 
 
 </body>

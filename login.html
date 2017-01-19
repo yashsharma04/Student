@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<title>Student</title>
-	<style type="text/css">
 
-		.container {
-
-			margin: auto ; 
-		}
-
-	</style>
 	<script>
 		function check() 
 		{
@@ -22,23 +16,43 @@
 				return true ;
 			}
 			else 
-				return false ;
+			{
+				var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
+				for(var i =0 ;i <teachersArray.length ; i++)
+				{
+					if (username==teachersArray[i].user_name && password==teachersArray[i].password)
+					{
+						localStorage.setItem("username",username);
+						localStorage.setItem("password",password);
+						window.open("teacherLogin.html","_self");
+					}
+
+				}
+				
+				document.getElementById("lb").innerText = "UserName or Password wrong";
+				document.getElementById("lb").style.color = "red";
+				return false ;	
+
+			}
 
 		}
 	</script>
 </head>
 <body>
-	<form action="onLogin.html" method="post" onsubmit="return check();">
+	<div class='container'>
+		<form action="onLogin.html" method="post" onsubmit="return check();">
 		<div id='container'>
 		<label>UserName <input type="text" id="username" name="username" ></label><br><br>
 		<label>Password <input type="password" id="password" name="password" ></label>
 		<br>
 		<br>
-		<input type="submit" name="btn">
+		<input type="submit" class='btn1' name="btn">
 		<label id='lb'></label>
 	</div>	
 		
-	</form>
+	</form>	
+	</div>
+	
 	
 	
 </body>
