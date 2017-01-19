@@ -8,8 +8,7 @@
 <body>
 	<div class='header'  data-position="fixed" >
 		<p class='admin' >Admin</p>
-		<a href="login.html" class='logout'>Logout</a>
-		
+		<a href="login.html" onclick="logout()" class='logout'>Logout</a>	
 	</div>
 	<nav>
 	  <ul>
@@ -20,7 +19,6 @@
 	    <li><button class="btnlist" type="button">Show Subjects</button></li>
 	    <li><button class="btnlist" onclick="showTeachers()" type="button">Show Teachers</button></li>
 	  </ul>
-	
 	</nav>
 	<div id='mainContent'>
 		<button type="button" id='btn1' class='btn' onclick="return dep();" >Add Department</button>
@@ -45,8 +43,7 @@
 		<select id="select_departments" onchange="change_subjects(this)"> 
 		</select>
 		<select id='select_subjects'>
-		</select>
-		<br><br>
+		</select><br><br>
 		<button type="button" class='btn' onclick="subt()" id='subt'>Submit Teacher</button>
 		<div id='content'>
 		</div>
@@ -54,7 +51,7 @@
 	<div id='showTeacher'>
 		<button type="button" onclick="byDepartment(this)" class='btn' >By Department</button>
 		<button type="button" onclick="bySubject()" class='btn'>By Subject</button>
-
+		
 	</div>
 	<br>
 	<br>
@@ -65,7 +62,7 @@
 		<table id='table'>
 			<thead>
 				<tr>
-					<th>Department</th>
+					<th id='dd'>Department</th>
 					<th>Teacher Name</th>
 				</tr>
 			</thead>
@@ -76,9 +73,20 @@
 	</div>
 
 	<div id='onlySubject'>
-		<select id="ss">
-			<option></option>
+		<select id="ss" onchange="onSubjectChange()" >
 		</select>
+		<br><br>
+		<table id='table2'>
+			<thead>
+				<tr>
+					<th id='sss'>Subject</th>
+					<th>Teacher Name</th>
+				</tr>
+			</thead>
+			<tbody id='body2'>
+
+			</tbody>
+		</table>
 	</div>
 
 

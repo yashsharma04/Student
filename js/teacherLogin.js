@@ -19,6 +19,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function changePassword()
 {
+
+	document.getElementById("main_content").innerHTML = "";
+	// document.getElementById("main_content")+="";
 	
+
 }
 

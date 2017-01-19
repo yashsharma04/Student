@@ -4,7 +4,17 @@
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<title>Student</title>
 
+
+
 	<script>
+
+		document.addEventListener("DOMContentLoaded", function(event) { 
+
+			if (localStorage.getItem("loggedin")=="true")
+			{
+				window.open("onLogin.html","_self");
+			}
+		});
 		function check() 
 		{
 			var username = document.getElementById("username").value;
@@ -13,26 +23,27 @@
 			console.log(password) ;
 			if (username=="admin" && password=="admin")
 			{
+				localStorage.setItem("loggedin","true");
 				return true ;
 			}
 			else 
 			{
+				var count =0 ;
 				var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 				for(var i =0 ;i <teachersArray.length ; i++)
 				{
 					if (username==teachersArray[i].user_name && password==teachersArray[i].password)
 					{
+						localStorage.setItem("loggedin","true");
+						
 						localStorage.setItem("username",username);
 						localStorage.setItem("password",password);
 						window.open("teacherLogin.html","_self");
 					}
-
 				}
-				
 				document.getElementById("lb").innerText = "UserName or Password wrong";
 				document.getElementById("lb").style.color = "red";
 				return false ;	
-
 			}
 
 		}

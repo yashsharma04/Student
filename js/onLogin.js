@@ -1,5 +1,9 @@
-	document.addEventListener("DOMContentLoaded", function(event) { 
+	document.addEventListener("DOMContentLoaded", function(event) { 	
 
+				if (localStorage.getItem("loggedin")=="false")
+				{
+					window.open("login.html","_self");
+				}
 				if (localStorage.getItem("arr1")==undefined)
 				{
 					console.log("inside undefined");
@@ -32,6 +36,41 @@
 				document.getElementById("onlyDepartment").style.display= "none";
 				// document.getElementById("bydORs").style.display= "none";
 		});
+		function logout() 
+		{
+			localStorage.setItem("loggedin","false");
+			window.open("login.html","_self");
+		}
+		function onSubjectChange()
+		{
+			var subject = document.getElementById("ss").value;
+			// alert(department);
+			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
+			// var table = document.createElement();
+			var arr= [] ;
+			for(var i=0 ; i<teachersArray.length;i++)
+			{
+				if(teachersArray[i].sub_name==subject)
+				{
+					arr.push(teachersArray[i].teacher_name);
+				}
+			}
+
+			var table = document.getElementById("table2");
+			var body =  document.getElementById("body2");
+			body.innerHTML= "";
+			for(var i=0;i<arr.length;i++)
+			{
+				// alert(arr[i]);
+				var row = body.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				cell1.innerHTML=subject;
+				cell2.innerHTML=arr[i];
+			}
+			
+			
+		}
 
 		function onDepartmentChange()
 		{
@@ -63,6 +102,7 @@
 		}
 		function byDepartment()
 		{	
+			
 			document.getElementById("onlyDepartment").style.display= "block";
 			document.getElementById("onlySubject").style.display= "none";
 			var select= document.getElementById("dd");
@@ -102,8 +142,48 @@
 		}
 		function bySubject()
 		{
+			
 			document.getElementById("onlySubject").style.display= "block";
 			document.getElementById("onlyDepartment").style.display= "none";
+
+			var select = document.getElementById("ss");
+
+			var arr = JSON.parse(localStorage.getItem("subarray"));
+
+			select.innerHTML="";
+			for(var i =0 ; i<arr.length;i++)
+			{
+				var option = document.createElement("option");
+				option.textContent = arr[i].subName;
+				select.appendChild(option);
+			}
+
+			var subject =arr[0].subName;
+			// alert(department);
+			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
+			// var table = document.createElement();
+			var arr= [] ;
+			for(var i=0 ; i<teachersArray.length;i++)
+			{
+				if(teachersArray[i].sub_name==subject)
+				{
+					arr.push(teachersArray[i].teacher_name);
+				}
+			}
+
+			var table = document.getElementById("table2");
+			var body =  document.getElementById("body2");
+			body.innerHTML= "";
+			for(var i=0;i<arr.length;i++)
+			{
+				// alert(arr[i]);
+				var row = body.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				cell1.innerHTML=subject;
+				cell2.innerHTML=arr[i];
+			}
+
 		}
 		function gotoHome() 
 		{
@@ -138,16 +218,19 @@
 				}
 			}
 		}
-		 
 		function dep() 
 		{
 			document.getElementById("dep").style.display= "block" ;
 			document.getElementById("subd").style.display= "block" ;
+			document.getElementById("tea").style.display= "none";
+			document.getElementById("subt").style.display= "none";
 
-			
+
 		}
 		function tea()
 		{
+			document.getElementById("dep").style.display= "none" ;
+			document.getElementById("subd").style.display= "none" ;			
 			document.getElementById("tea").style.display= "block" ;
 			document.getElementById("subt").style.display= "block";
 			document.getElementById("select_subjects").style.display= "block";
@@ -175,6 +258,8 @@
 		}
 		function sub()
 		{
+			document.getElementById("dep").style.display= "none" ;
+			document.getElementById("subd").style.display= "none" ;	
 			document.getElementById("sub").style.display= "block" ;
 			document.getElementById("subs").style.display= "block";
 			document.getElementById("select").style.display= "block";
