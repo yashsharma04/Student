@@ -449,10 +449,10 @@
 						var count =0 ;
 						var teacher = {
 										"id":0,
-										"sub_name" : subject , 
+										"sub_name" : [subject] , 
 										"dep_name" : department,
-										"teacher_name":teacher_name,
-										"user_name": teacher_name+"0" ,
+										"teacher_name":"",
+										"user_name": teacher_name,
 										"password":teacher_name+"0",
 										"role":"teacher"
 									   }; 	
@@ -462,7 +462,7 @@
 						var personalArray = []; 
 						var personal = {
 
-								"username":teacher_name+"0",
+								"username":teacher_name,
 								"phno":"",
 								"address":"",
 								"hsc":"",
@@ -484,23 +484,61 @@
 				var teacher_name = document.getElementById("tea").value;
 				var department=  document.getElementById("select_departments").value;
 				var subject = document.getElementById("select_subjects").value;
+				
+				
 				var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 				var len = teachersArray.length ;
 				var id = teachersArray[len-1].id ;
 				var count = parseInt(id + 1) ;
 				// teachersArray[count]= count ; 
-				var teacher =  {
+				var flag =0 ; 
+				var index = -1 ;
+				for(var i=0 ; i<teachersArray.length;i++)
+				{
+					if(teachersArray[i].user_name==teacher_name)
+					{
+						flag =1 ;
+						index = i ;
+					}
+				}
+				if(flag==1)
+				{
+					teachersArray[index].sub_name.push(subject);
+					// teachersArray[index].id=subject;
+					// teachersArray[index].dep_name=department;
+					// teachersArray[index].=subject;
+					// var teacher =  {
+					// 			"id":count,
+					// 			"sub_name":[subject],
+					// 			"dep_name":department,
+					// 			"teacher_name":"",
+					// 			"user_name":teacher_name,
+					// 			"password":teacher_name+count
+					// 		};
+					// teachersArray.push(teacher);
+					localStorage.setItem("teachersArray",JSON.stringify(teachersArray));
+					alert("Subject Added");
+					window.open("onLogin.html","_self");
+				}
+				else
+				{
+					// teachersArray[index].id=subject;
+					// teachersArray[index].dep_name=department;
+					// teachersArray[index].=subject;
+					var teacher =  {
 								"id":count,
-								"sub_name":subject,
+								"sub_name":[subject],
 								"dep_name":department,
-								"teacher_name":teacher_name,
-								"user_name":teacher_name+count,
+								"teacher_name":"",
+								"user_name":teacher_name,
 								"password":teacher_name+count
 							};
-				teachersArray.push(teacher);
-				localStorage.setItem("teachersArray",JSON.stringify(teachersArray));
-				alert("Teacher Added");
-				window.open("onLogin.html","_self");
+					teachersArray.push(teacher);
+					localStorage.setItem("teachersArray",JSON.stringify(teachersArray));
+					alert("Teacher Added");
+					window.open("onLogin.html","_self");
+				}
+				
 			}
 		}
 		function subs()
