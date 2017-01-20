@@ -63,6 +63,12 @@
 			var table = document.getElementById("table2");
 			var body =  document.getElementById("body2");
 			body.innerHTML= "";
+			
+			if (arr.length==0)
+			{
+				document.getElementById("error2").innerText= "Nothing to show";
+				document.getElementById("table2").style.display="none";
+			}
 			for(var i=0;i<arr.length;i++)
 			{
 				// alert(arr[i]);
@@ -93,6 +99,11 @@
 			var table = document.getElementById("table");
 			var body =  document.getElementById("body");
 			body.innerHTML= "";
+			if (arr.length==0)
+			{
+				document.getElementById("error").innerText= "Nothing to show";
+				document.getElementById("table").style.display="none";
+			}
 			for(var i=0;i<arr.length;i++)
 			{
 				var row = body.insertRow(0);
@@ -135,6 +146,12 @@
 			var table = document.getElementById("table");
 			var body =  document.getElementById("body");
 			body.innerHTML= "";
+
+			if (arr.length==0)
+			{
+				document.getElementById("error").innerText= "Nothing to show";
+				document.getElementById("table").style.display="none"; 
+			}
 			for(var i=0;i<arr.length;i++)
 			{
 				var row = body.insertRow(0);
@@ -178,6 +195,12 @@
 			var table = document.getElementById("table2");
 			var body =  document.getElementById("body2");
 			body.innerHTML= "";
+
+			if (arr.length==0)
+			{
+				document.getElementById("error2").innerText= "Nothing to show";
+				document.getElementById("table2").style.display="none";
+			}
 			for(var i=0;i<arr.length;i++)
 			{
 				// alert(arr[i]);
