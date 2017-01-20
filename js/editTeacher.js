@@ -5,7 +5,7 @@
 		{
 			window.open("login.html","_self");
 		}
-		else 
+		else if(localStorage.getItem("loggedin")==localStorage.getItem("username")) 
 		{
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 			var username = localStorage.getItem("loggedin");	

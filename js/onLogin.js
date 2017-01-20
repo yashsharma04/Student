@@ -1,10 +1,6 @@
 	document.addEventListener("DOMContentLoaded", function(event) { 	
 
-				if(localStorage.getItem("loggedin")==undefined)
-				{
-					window.open("login.html","_self");
-				}
-				if (localStorage.getItem("loggedin")=="false")
+				if(localStorage.getItem("loggedin")==undefined || localStorage.getItem("loggedin")=="false" || localStorage.getItem("loggedin")!="admin")
 				{
 					window.open("login.html","_self");
 				}
@@ -36,6 +32,8 @@
 				document.getElementById("select_subjects").style.display= "none";
 				document.getElementById("select_departments").style.display= "none";
 				document.getElementById("showTeacher").style.display= "none";
+				document.getElementById("makeHod").style.display="none";
+
 				document.getElementById("onlySubject").style.display= "none";
 				document.getElementById("onlyDepartment").style.display= "none";
 				// document.getElementById("bydORs").style.display= "none";
@@ -63,7 +61,7 @@
 			var table = document.getElementById("table2");
 			var body =  document.getElementById("body2");
 			body.innerHTML= "";
-			
+
 			if (arr.length==0)
 			{
 				document.getElementById("error2").innerText= "Nothing to show";
@@ -132,9 +130,7 @@
 			}
 
 			var department =arr[0];
-			// alert(department);
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
-			// var table = document.createElement();
 			var arr= [] ;
 			for(var i=0 ; i<teachersArray.length;i++)
 			{
@@ -146,7 +142,6 @@
 			var table = document.getElementById("table");
 			var body =  document.getElementById("body");
 			body.innerHTML= "";
-
 			if (arr.length==0)
 			{
 				document.getElementById("error").innerText= "Nothing to show";
@@ -163,14 +158,10 @@
 		}
 		function bySubject()
 		{
-			
 			document.getElementById("onlySubject").style.display= "block";
 			document.getElementById("onlyDepartment").style.display= "none";
-
 			var select = document.getElementById("ss");
-
 			var arr = JSON.parse(localStorage.getItem("subarray"));
-
 			select.innerHTML="";
 			for(var i =0 ; i<arr.length;i++)
 			{
@@ -178,7 +169,6 @@
 				option.textContent = arr[i].subName;
 				select.appendChild(option);
 			}
-
 			var subject =arr[0].subName;
 			// alert(department);
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
@@ -219,11 +209,100 @@
 			document.getElementById("onlyDepartment").style.display= "none";
 			// document.getElementById("bydORs").style.display= "none";
 			document.getElementById("showTeacher").style.display= "none";
+			document.getElementById("makeHod").style.display= "none";
+
 		}
 		function showTeachers()
 		{
 			document.getElementById("mainContent").style.display="none";
 			document.getElementById("showTeacher").style.display="block";
+			document.getElementById("makeHod").style.display= "none";			
+		}
+		function changeHodDepartment()
+		{
+			var dep_value = document.getElementById("hoddep").value;
+			var select_teacher = document.getElementById("hodteacher");
+			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
+			var subjectArray = [] ;
+			for(var i=0;i<teachersArray.length ;i++)
+			{
+				if(teachersArray[i].dep_name == dep_value)
+				{
+					subjectArray.push(teachersArray[i].teacher_name);
+				}
+			}
+			select_teacher.innerHTML= "" ;	
+			for(var i=0 ;i<subjectArray.length ; i++)
+			{
+				var option = document.createElement("option");
+				option.textContent= subjectArray[i];
+				select_teacher.appendChild(option);
+			}
+		}
+		function makeHodFinal() 
+		{
+			var department = document.getElementById("hoddep").value;
+			var teacher  = document.getElementById("hodteacher").value ;
+			if(teacher=="")
+			{
+				alert("No teacher available in this department");
+			}
+			else
+			{
+				console.log(department);
+				console.log(teacher);
+				var teachersArray = JSON.parse(localStorage.getItem("teachersArray")); 
+				for(var i =0 ; i<teachersArray.length ; i++)
+				{
+					if(teachersArray[i].dep_name==department)
+					{
+						teachersArray[i].role="teacher";		
+					}
+					if (teachersArray[i].teacher_name==teacher)
+					{
+						teachersArray[i].role = "HOD";
+					}
+				}
+				localStorage.setItem("teachersArray",JSON.stringify(teachersArray)) ;
+				alert("Hod Role Added");
+				window.open("onLogin.html","_self");
+			}
+		}
+		function makeHod()
+		{
+			document.getElementById("mainContent").style.display="none";
+			document.getElementById("makeHod").style.display="block";
+			document.getElementById("showTeacher").style.display="none";
+			document.getElementById("onlySubject").style.display= "none";
+			document.getElementById("onlyDepartment").style.display= "none";
+
+			var departments = JSON.parse(localStorage.getItem("arr1"));
+			var select = document.getElementById("hoddep");
+			select.innerHTML=""	;
+			for(var i=0;i<departments.length ; i++)
+			{
+				var option = document.createElement("option");
+				option.textContent= departments[i];
+				select.appendChild(option);
+			}
+
+			var teachers = [] ;
+			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
+			for(var i =0 ;i<teachersArray.length ; i++)
+			{
+				if(teachersArray[i].dep_name==departments[0])
+				{
+					teachers.push(teachersArray[i].teacher_name) ;
+				}
+			}
+			var select_teacher = document.getElementById("hodteacher");
+			select_teacher.innerHTML="";
+			for(var i=0 ;i<teachers.length;i++)
+			{
+				var option = document.createElement("option");
+				option.textContent = teachers[i];
+				select_teacher.appendChild(option);
+			}
 		}
 		function change_subjects(obj) 
 		{
@@ -352,36 +431,53 @@
 			if (localStorage.getItem("teachersArray") ==undefined)
 			{
 				var teacher_name = document.getElementById("tea").value;
-				var department=  document.getElementById("select_departments").value;
-				var subject = document.getElementById("select_subjects").value;
-				var teachersArray = [] ;
-				var count =0 ;
-				var teacher = {
-								"id":0,
-								"sub_name" : subject , 
-								"dep_name" : department,
-								"teacher_name":teacher_name,
-								"user_name": teacher_name+"0" ,
-								"password":teacher_name+"0",
-								"role":"teacher"
-							   }; 	
-				teachersArray.push(teacher);
-				localStorage.setItem("teachersArray",JSON.stringify(teachersArray));
+				if(teacher_name=="")
+				{
+					alert("please enter a teacher name ");
+				}
+				else
+				{	
+					var department=  document.getElementById("select_departments").value;
+					var subject = document.getElementById("select_subjects").value;
+					if(department=="" || subject=="")
+					{
+						alert("No value Selected");
+					}
+					else
+					{
+						var teachersArray = [] ;
+						var count =0 ;
+						var teacher = {
+										"id":0,
+										"sub_name" : subject , 
+										"dep_name" : department,
+										"teacher_name":teacher_name,
+										"user_name": teacher_name+"0" ,
+										"password":teacher_name+"0",
+										"role":"teacher"
+									   }; 	
+						teachersArray.push(teacher);
+						localStorage.setItem("teachersArray",JSON.stringify(teachersArray));
 
-				var personalArray = []; 
-				var personal = {
+						var personalArray = []; 
+						var personal = {
 
-						"username":teacher_name+"0",
-						"phno":"",
-						"address":"",
-						"hsc":"",
-						"bachelors" :"",
-						"masters":""
-				};
-				personalArray.push(personal);
-				localStorage.setItem("personalArray",JSON.stringify(personalArray));
-				alert("Teacher added");
-				window.open("onLogin.html","_self");
+								"username":teacher_name+"0",
+								"phno":"",
+								"address":"",
+								"hsc":"",
+								"bachelors" :"",
+								"masters":""
+						};
+						personalArray.push(personal);
+						localStorage.setItem("personalArray",JSON.stringify(personalArray));
+						alert("Teacher added");
+						window.open("onLogin.html","_self");
+					}
+					
+
+				}
+				
 			}
 			else 
 			{
@@ -454,8 +550,4 @@
 				alert("Subject added ");
 				window.open("onLogin.html","_self");
 			}
-		}		
-
-
-
-	
+		}

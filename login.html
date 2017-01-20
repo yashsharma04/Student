@@ -37,7 +37,7 @@
 			else 
 			{
 				// alert("vhv");
-				var count =0 ;
+				var count =0 ;var flag =0 ;
 				var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 				for(var i =0 ;i <teachersArray.length ; i++)
 				{
@@ -51,34 +51,55 @@
 						count = 1 ;
 						window.location.href="teacherLogin.html";
 						break ; 
-
 					}
 				}
 				if(count==0)
 				{
-					document.getElementById("lb").innerText = "UserName or Password wrong";
-					document.getElementById("lb").style.color = "red";
-					return false ;		
-				}
-				
-			}
 
+					var students = JSON.parse(localStorage.getItem("students"));
+					for(var i =0 ;i <students.length ; i++)
+					{
+						// alert("inside for loop");
+						if (username==students[i].username && password==students[i].password)
+						{
+							localStorage.setItem("loggedin",username);
+							localStorage.setItem("username",username);
+							// localStorage.setItem("password",password);
+							flag = 1 ;
+							alert("nnn");
+							
+							break ; 
+						}
+					}
+					if(flag==0)
+					{
+						document.getElementById("lb").innerText = "UserName or Password wrong";
+						document.getElementById("lb").style.color = "red";
+						return false ;			
+					}
+					else
+					{
+						window.location.href="studentLogin.html";
+					}
+					
+				}
+			}
 		}
 	</script>
 </head>
 <body>
 	<div class='container'>
-		<form  method="post" onsubmit="return check();">
+		<!-- <form  method="post" onsubmit="return check();"> -->
 		<div id='container'>
 		<label>UserName <input type="text" id="username" name="username" ></label><br><br>
 		<label>Password <input type="password" id="password" name="password" ></label>
 		<br>
 		<br>
-		<input type="submit" class='btn1' name="btn">
+		<input type="submit" class='btn1' name="btn" onclick="check()">
 		<label id='lb'></label>
 	</div>	
 		
-	</form>	
+	<!-- </form>	 -->
 	</div>
 	
 	

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	// alert("inside teacher login");
 	console.log("inside teacher login");
 
-	if(localStorage.getItem("loggedin")=="undefined" || localStorage.getItem("loggedin")=="false" || localStorage.getItem("loggedin")== null)
+	if(localStorage.getItem("loggedin")=="admin" || localStorage.getItem("loggedin")=="undefined" || localStorage.getItem("loggedin")=="false" || localStorage.getItem("loggedin")== null)
 	{
 		window.open("login.html","_self");
 		// break ;
@@ -13,10 +13,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	{
 		document.getElementById("name").innerText= localStorage.getItem("username");	
 		var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
+
 		for(var i=0 ;i<teachersArray.length ;i++)
 		{
 			if (teachersArray[i].user_name==localStorage.getItem("username"))
 			{
+				if(teachersArray[i].role=="teacher")
+				{
+					document.getElementById("add_student").style.display = "none";
+				}
 				document.getElementById("teacher_name").innerText= teachersArray[i].teacher_name;
 				document.getElementById("dept_name").innerText= teachersArray[i].dep_name;
 				document.getElementById("subjects").innerText= teachersArray[i].sub_name;	
@@ -36,6 +41,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
 });
 
+function addStudent() 
+{
+	window.open("addStudent.html","_self");
+}
 function editDetails() 
 {
 	// alert("HELLO");
