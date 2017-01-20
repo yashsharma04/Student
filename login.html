@@ -3,17 +3,24 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<title>Student</title>
-
-
-
 	<script>
 
 		document.addEventListener("DOMContentLoaded", function(event) { 
-
-			if (localStorage.getItem("loggedin")=="true")
+			if(localStorage.getItem("loggedin")=="undefined" || localStorage.getItem("loggedin")=="false" || localStorage.getItem("loggedin")==null)
 			{
-				window.open("onLogin.html","_self");
+				// window.open("login.html","_self");
+				// do nothing 
 			}
+			else
+			{
+				if(localStorage.getItem("loggedin")=="admin")
+					window.open("onLogin.html","_self");	
+				else
+				{
+					window.open("teacherLogin.html","_self");		
+				}
+			}
+			
 		});
 		function check() 
 		{
@@ -23,27 +30,37 @@
 			console.log(password) ;
 			if (username=="admin" && password=="admin")
 			{
-				localStorage.setItem("loggedin","true");
+				localStorage.setItem("loggedin","admin");
+				window.open("onLogin.html","_self");
 				return true ;
 			}
 			else 
 			{
+				// alert("vhv");
 				var count =0 ;
 				var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 				for(var i =0 ;i <teachersArray.length ; i++)
 				{
+					// alert("inside for loop");
 					if (username==teachersArray[i].user_name && password==teachersArray[i].password)
 					{
-						localStorage.setItem("loggedin","true");
+						localStorage.setItem("loggedin",username);
 						
 						localStorage.setItem("username",username);
-						localStorage.setItem("password",password);
-						window.open("teacherLogin.html","_self");
+						// localStorage.setItem("password",password);
+						count = 1 ;
+						window.location.href="teacherLogin.html";
+						break ; 
+
 					}
 				}
-				document.getElementById("lb").innerText = "UserName or Password wrong";
-				document.getElementById("lb").style.color = "red";
-				return false ;	
+				if(count==0)
+				{
+					document.getElementById("lb").innerText = "UserName or Password wrong";
+					document.getElementById("lb").style.color = "red";
+					return false ;		
+				}
+				
 			}
 
 		}
@@ -51,7 +68,7 @@
 </head>
 <body>
 	<div class='container'>
-		<form action="onLogin.html" method="post" onsubmit="return check();">
+		<form  method="post" onsubmit="return check();">
 		<div id='container'>
 		<label>UserName <input type="text" id="username" name="username" ></label><br><br>
 		<label>Password <input type="password" id="password" name="password" ></label>

@@ -1,5 +1,9 @@
 	document.addEventListener("DOMContentLoaded", function(event) { 	
 
+				if(localStorage.getItem("loggedin")==undefined)
+				{
+					window.open("login.html","_self");
+				}
 				if (localStorage.getItem("loggedin")=="false")
 				{
 					window.open("login.html","_self");
@@ -224,13 +228,25 @@
 			document.getElementById("subd").style.display= "block" ;
 			document.getElementById("tea").style.display= "none";
 			document.getElementById("subt").style.display= "none";
+			document.getElementById("select_departments").style.display= "none";
+			document.getElementById("select_subjects").style.display= "none";
+			document.getElementById("sub").style.display= "none";
+			document.getElementById("subs").style.display= "none";
+			document.getElementById("select").style.display= "none";
 
 
 		}
 		function tea()
 		{
+
 			document.getElementById("dep").style.display= "none" ;
-			document.getElementById("subd").style.display= "none" ;			
+			document.getElementById("subd").style.display= "none" ;	
+			document.getElementById("sub").style.display= "none" ;	
+			document.getElementById("select").style.display= "none" ;
+			document.getElementById("subs").style.display= "none" ;	
+	
+
+
 			document.getElementById("tea").style.display= "block" ;
 			document.getElementById("subt").style.display= "block";
 			document.getElementById("select_subjects").style.display= "block";
@@ -259,7 +275,11 @@
 		function sub()
 		{
 			document.getElementById("dep").style.display= "none" ;
-			document.getElementById("subd").style.display= "none" ;	
+			document.getElementById("subd").style.display= "none" ;
+			document.getElementById("tea").style.display= "none";
+			document.getElementById("select_subjects").style.display= "none";
+			document.getElementById("select_departments").style.display= "none";
+			document.getElementById("subt").style.display= "none" ;
 			document.getElementById("sub").style.display= "block" ;
 			document.getElementById("subs").style.display= "block";
 			document.getElementById("select").style.display= "block";
@@ -279,7 +299,21 @@
 			var department = document.getElementById("dep").value;
 			if (typeof(Storage) !== "undefined") 
 			{
-			    var yash =JSON.parse(localStorage.getItem("arr1")) ;
+
+			    var yash =JSON.parse(localStorage.getItem("arr1"));
+			    var count =0 ; 
+			    for(var i=0 ; i<yash.length;i++)
+			    {
+			    	if (yash[i]==department)
+			    	{
+			    		count = 1 ; 
+			    	}
+			    }
+			    if(count ==1)
+			    {
+			    	alert("department already exists");
+			    	return false ;
+			    }
 			    yash.push(department);
 			    localStorage.setItem("arr1",JSON.stringify(yash));
 			    alert("department added");
@@ -305,10 +339,24 @@
 								"dep_name" : department,
 								"teacher_name":teacher_name,
 								"user_name": teacher_name+"0" ,
-								"password":teacher_name+"0"
+								"password":teacher_name+"0",
+								"role":"teacher"
 							   }; 	
 				teachersArray.push(teacher);
 				localStorage.setItem("teachersArray",JSON.stringify(teachersArray));
+
+				var personalArray = []; 
+				var personal = {
+
+						"username":teacher_name+"0",
+						"phno":"",
+						"address":"",
+						"hsc":"",
+						"bachelors" :"",
+						"masters":""
+				};
+				personalArray.push(personal);
+				localStorage.setItem("personalArray",JSON.stringify(personalArray));
 				alert("Teacher added");
 				window.open("onLogin.html","_self");
 			}
@@ -360,9 +408,20 @@
 			else 
 			{
 				var subarray= JSON.parse(localStorage.getItem("subarray"));
+
+
 				var subjectValue  = document.getElementById("sub").value ;
 				var e = document.getElementById("select");
 				var department = e.options[e.selectedIndex].value;
+				for(var i = 0 ; i<subarray.length;i++)
+				{
+					if(subarray[i].subName==subjectValue && subarray[i].department==department)
+					{
+						alert("Subject in this department already exists");
+						return false; 
+					}
+				}
+				
 				var subject = {
 								  "subName": subjectValue,
 								  "department": department

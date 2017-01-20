@@ -9,7 +9,7 @@
 	<div class='header'  data-position="fixed" >
 		<!-- write teacher name  --> 
 		<a href='teacherLogin.html' style='margin-top: 10px;font-size: 20px; text-decoration: none;' class='admin' id='name'></p>
-		<a href="login.html" class='logout'>Logout</a>
+		<a onclick="logout()" class='logout'>Logout</a>
 	</div>
 	<nav>
 	<img src="img/profile.jpg" width="170" height="150" alt="Profile Photo">
@@ -25,7 +25,20 @@
 		<label>Department: </label><label id="dept_name"></label><br><br>
 		<label>Subjects Teaching: </label><label id="subjects"></label><br><br>
 		<label>UserName :</label><label id="username"></label><br><br>
+		<label>Role :</label><label id="role"></label><br><br>
+
+		<br><br><h3>Personal Details</h3>
+
+		<label>Phone Number :</label><label id="phno"></label><br><br>
+		<label>Address :</label><label id="addr"></label><br><br>
+		<label>High School :</label><label id="hsc"></label><br><br>
+		<label>Bachelors :</label><label id="bach"></label><br><br>
+		<label>Masters :</label><label id="masters"></label><br><br>
+ 
+		<button class='btn' type="button" onclick="editDetails()" >Edit Personal Details</button>
 	</div>
+
+
 
 
 
