@@ -1,3 +1,4 @@
+	var givenDepartments = ["Computer Science","Electronics","Mechanical","Civil","Mechatronics","Information Technology","Chemical","BioMed"] ; 
 	document.addEventListener("DOMContentLoaded", function(event) { 	
 
 				if(localStorage.getItem("loggedin")==undefined || localStorage.getItem("loggedin")=="false" )
@@ -27,16 +28,23 @@
 		});
 		function populate()
 		{
-			var departments = ["Computer Science","Electronics","Mechanical","Civil","Mechatronics","Information Technology","Chemical","BioMed"];
 			var datalist = document.getElementById("dep");
 
 			datalist.innerHTML = "";
-			for(var i=0 ;i<departments.length ;i++){
+			for(var i=0 ; i<givenDepartments.length ; i++ ){
 				var option = document.createElement("option");
-				option.textContent= departments[i];
+				option.textContent= givenDepartments[i];
 				datalist.appendChild(option);
 			}
-			
+		}
+		function checkFromDepartments(department)
+		{
+			for(var i =0 ; i<givenDepartments.length ;i++){
+				if(department==givenDepartments[i]){
+					return true;
+				}
+			}
+			return false; 
 		}
 		function changeToNone()
 		{
@@ -154,7 +162,6 @@
 			var table = document.getElementById("table");
 			var body =  document.getElementById("body");
 			body.innerHTML= "";
-			alert(arr.length);
 			if (arr.length==0)
 			{
 				document.getElementById("error").innerText= "Nothing to show";
@@ -413,9 +420,15 @@
 		}
 		function subd() 
 		{
+
 			var department =document.getElementsByName("dep")[0].value;
+
+
 			if(department.trim()==""){
 				alert("Field Empty");
+			}
+			else if(!checkFromDepartments(department)){
+				alert("Choose from Existing Departments");
 			}
 			else if(department.length<5 || department.length>20){
 				alert("Length between 5 and 14");
@@ -425,6 +438,7 @@
 			}
 			else 
 			{
+
 				if (typeof(Storage) !== "undefined") 
 				{
 				    var yash =JSON.parse(localStorage.getItem("arr1"));
