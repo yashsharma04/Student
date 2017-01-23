@@ -28,9 +28,12 @@
 		<br><br>
 		<button type="button" id='btn3'  class='btn' onclick="return sub();">Add Subjects </button>
 		<br><br>
-		<input type="text" id="dep" name="dep" placeholder="Add a Department ">
+		<!-- <input type="text" id="dep" name="dep" placeholder="Add a Department "> -->
+		<input list="dep" name="dep">
+		<datalist id="dep">
+		</datalist>
 		<br><br>
-		<button type="button" id='subd'  class='btn' onclick="subd()" >Submit Department</button>
+		<button type="button" id='subd' class='btn' onclick="subd()" >Submit Department</button>
 		<br><br>
 		<input type="text" id="sub" name="sub" placeholder="Add a Subject ">
 		<br><br>
@@ -38,7 +41,6 @@
 		<br><br>
 		<button type="button" id='subs' class='btn' onclick="subs()" >Submit Subject</button>
 		<br>
-		
 		<input type="text" id="tea" name="tea" placeholder="Teacher Username">
 		<br>
 		<br>
@@ -105,8 +107,5 @@
 			</tbody>
 		</table>
 	</div>
-
-
-
 </body>
 </html>

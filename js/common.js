@@ -16,7 +16,7 @@ function onlyCharactersAllowed(str){
 		return false;
 	}
 }
-function checkAddress()
+function checkAddress(address)
 {
 	if(address.length<5)
 	{

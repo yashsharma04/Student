@@ -19,6 +19,13 @@
 			}
 			
 		});	
+		function checkIfEmpty(username,password)
+		{
+			if(username.trim()=="" || password.trim()=="")
+				return true;
+			else 
+				return false;
+		}
 		function checkIfAdmin(username,password){
 
 			if(username=="admin" && password=="admin"){
@@ -55,7 +62,12 @@
 		function check(){
 			var username = document.getElementById("username").value;
 			var password = document.getElementById("password").value;
-			if (checkIfAdmin(username,password)){
+			if(checkIfEmpty(username,password)){
+				document.getElementById("lb").innerText = "Fields Empty";
+				document.getElementById("lb").style.color = "red";
+				return false ;			
+			}
+			else if (checkIfAdmin(username,password)){
 
 				localStorage.setItem("loggedin",0);
 				localStorage.setItem("username","admin");
