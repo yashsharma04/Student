@@ -1,4 +1,3 @@
-
 	document.addEventListener("DOMContentLoaded", function(event) { 	
 
 				if(localStorage.getItem("loggedin")==undefined || localStorage.getItem("loggedin")=="false" )
@@ -11,6 +10,7 @@
 					window.open("studentLogin.html","_self");
 				else
 				{
+						populate();
 						if (localStorage.getItem("arr1")==undefined)
 						{
 							console.log("inside undefined");
@@ -21,25 +21,42 @@
 						}
 						else 
 						{
+							changeToNone();
 						}
-					document.getElementById("dep").style.display= "none";
-					document.getElementById("tea").style.display= "none";
-					document.getElementById("sub").style.display= "none";
-					document.getElementById("subd").style.display= "none";
-					document.getElementById("subt").style.display= "none";
-					document.getElementById("subs").style.display= "none";
-					document.getElementById("select").style.display= "none";
-					document.getElementById("select_subjects").style.display= "none";
-					document.getElementById("select_departments").style.display= "none";
-					document.getElementById("showTeacher").style.display= "none";
-					document.getElementById("makeHod").style.display="none";
-					document.getElementById("onlySubject").style.display= "none";
-					document.getElementById("onlyDepartment").style.display= "none";
 				}
 		});
+		function populate()
+		{
+			var departments = ["Computer Science","Electronics","Mechanical","Civil","Mechatronics","Information Technology","Chemical","BioMed"];
+			var datalist = document.getElementById("dep");
 
+			datalist.innerHTML = "";
+			for(var i=0 ;i<departments.length ;i++){
+				var option = document.createElement("option");
+				option.textContent= departments[i];
+				datalist.appendChild(option);
+			}
+			
+		}
+		function changeToNone()
+		{
+			document.getElementById("dep").style.display= "none";
+			document.getElementById("tea").style.display= "none";
+			document.getElementById("sub").style.display= "none";
+			document.getElementById("subd").style.display= "none";
+			document.getElementById("subt").style.display= "none";
+			document.getElementById("subs").style.display= "none";
+			document.getElementById("select").style.display= "none";
+			document.getElementById("select_subjects").style.display= "none";
+			document.getElementById("select_departments").style.display= "none";
+			document.getElementById("showTeacher").style.display= "none";
+			document.getElementById("makeHod").style.display="none";
+			document.getElementById("onlySubject").style.display= "none";
+			document.getElementById("onlyDepartment").style.display= "none";
+			document.getElementsByName("dep")[0].style.display="none";
+		}
 		function onSubjectChange(){
-			var subject = document.getElementById("select_department").value;
+			var subject = document.getElementById("ss").value;
 			// alert(department);
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 			// var table = document.createElement();
@@ -71,7 +88,6 @@
 				}	
 			}	
 		}
-
 		function onDepartmentChange(){
 			// alert("ss");
 			var department = document.getElementById("dd").value;
@@ -114,7 +130,7 @@
 		{	
 			document.getElementById("onlyDepartment").style.display= "block";
 			document.getElementById("onlySubject").style.display= "none";
-			var select= document.getElementById("select_department");
+			var select= document.getElementById("dd");
 			
 			var arr = JSON.parse(localStorage.getItem("arr1"));
 			select.innerHTML="";
@@ -158,11 +174,25 @@
 			}
 			
 		}
+		function findTeacherBySubject(subject)
+		{	
+			for(var i=0 ; i<teachersArray.length;i++)
+			{
+				for(var j=0;j<teachersArray[i].sub_name.length;j++)
+				{
+					if(teachersArray[i].sub_name[j]==subject)
+					{
+
+						arr.push(teachersArray[i].user_name);
+					}	
+				}
+			}
+		}
 		function bySubject()
 		{
 			document.getElementById("onlySubject").style.display= "block";
 			document.getElementById("onlyDepartment").style.display= "none";
-			var select = document.getElementById("select_department");
+			var select = document.getElementById("ss");
 			var arr = JSON.parse(localStorage.getItem("subarray"));
 			select.innerHTML="";
 			for(var i =0 ; i<arr.length;i++)
@@ -175,22 +205,7 @@
 			// alert(department);
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 			// var table = document.createElement();
-			var arr= [] ;
-
-			for(var i=0 ; i<teachersArray.length;i++)
-			{
-				// alert(teachersArray[i].sub_name.length);
-				for(var j=0;j<teachersArray[i].sub_name.length;j++)
-				{
-					if(teachersArray[i].sub_name[j]==subject)
-					{
-
-						arr.push(teachersArray[i].user_name);
-					}	
-				}
-				
-			}
-
+			var arr = findTeacherBySubject(subject);
 			var table = document.getElementById("table2");
 			var body =  document.getElementById("body2");
 			body.innerHTML= "";
@@ -205,7 +220,6 @@
 			{
 				for(var i=0;i<arr.length;i++)
 				{
-					// alert(arr[i]);
 					var row = body.insertRow(0);
 					var cell1 = row.insertCell(0);
 					var cell2 = row.insertCell(1);
@@ -213,18 +227,11 @@
 					cell2.innerHTML=arr[i];
 				}	
 			}
-			
-
 		}
 		function gotoHome() 
 		{
+			changeToNone();
 			document.getElementById("mainContent").style.display="block";
-			document.getElementById("onlySubject").style.display= "none";
-			document.getElementById("onlyDepartment").style.display= "none";
-			// document.getElementById("bydORs").style.display= "none";
-			document.getElementById("showTeacher").style.display= "none";
-			document.getElementById("makeHod").style.display= "none";
-
 		}
 		function showTeachers()
 		{
@@ -341,29 +348,14 @@
 		}
 		function dep() 
 		{
-			document.getElementById("dep").style.display= "block" ;
+			changeToNone();
+			// document.getElementById("dep").style.display= "block" ;
 			document.getElementById("subd").style.display= "block" ;
-			document.getElementById("tea").style.display= "none";
-			document.getElementById("subt").style.display= "none";
-			document.getElementById("select_departments").style.display= "none";
-			document.getElementById("select_subjects").style.display= "none";
-			document.getElementById("sub").style.display= "none";
-			document.getElementById("subs").style.display= "none";
-			document.getElementById("select").style.display= "none";
-
-
+			document.getElementsByName("dep")[0].style.display="block";
 		}
 		function tea()
 		{
-
-			document.getElementById("dep").style.display= "none" ;
-			document.getElementById("subd").style.display= "none" ;	
-			document.getElementById("sub").style.display= "none" ;	
-			document.getElementById("select").style.display= "none" ;
-			document.getElementById("subs").style.display= "none" ;	
-	
-
-
+			changeToNone();
 			document.getElementById("tea").style.display= "block" ;
 			document.getElementById("subt").style.display= "block";
 			document.getElementById("select_subjects").style.display= "block";
@@ -400,12 +392,7 @@
 		}
 		function sub()
 		{
-			document.getElementById("dep").style.display= "none" ;
-			document.getElementById("subd").style.display= "none" ;
-			document.getElementById("tea").style.display= "none";
-			document.getElementById("select_subjects").style.display= "none";
-			document.getElementById("select_departments").style.display= "none";
-			document.getElementById("subt").style.display= "none" ;
+			changeToNone();
 			document.getElementById("sub").style.display= "block" ;
 			document.getElementById("subs").style.display= "block";
 			document.getElementById("select").style.display= "block";
@@ -421,9 +408,12 @@
 		}
 		function subd() 
 		{
-			var department = document.getElementById("dep").value;
+			var department =document.getElementsByName("dep")[0].value;
 			if(department.trim()==""){
 				alert("Field Empty");
+			}
+			else if(department.length<5 || department.length>20){
+				alert("Length between 5 and 14");
 			}
 			else if (!onlyCharactersAllowed(department)){
 				alert("Only Characters allowed in department Name");	
@@ -469,7 +459,6 @@
 					}
 					else
 					{
-
 						var teachersArray = [] ;
 						var count =0 ;
 						var teacher = {
@@ -612,5 +601,4 @@
 					alert("This subject is already existing");
 				}
 			}
-
 		}

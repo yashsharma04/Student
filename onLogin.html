@@ -28,9 +28,12 @@
 		<br><br>
 		<button type="button" id='btn3'  class='btn' onclick="return sub();">Add Subjects </button>
 		<br><br>
-		<input type="text" id="dep" name="dep" placeholder="Add a Department ">
+		<!-- <input type="text" id="dep" name="dep" placeholder="Add a Department "> -->
+		<input list="dep" name="dep">
+		<datalist id="dep">
+		</datalist>
 		<br><br>
-		<button type="button" id='subd'  class='btn' onclick="subd()" >Submit Department</button>
+		<button type="button" id='subd' class='btn' onclick="subd()" >Submit Department</button>
 		<br><br>
 		<input type="text" id="sub" name="sub" placeholder="Add a Subject ">
 		<br><br>
@@ -38,7 +41,6 @@
 		<br><br>
 		<button type="button" id='subs' class='btn' onclick="subs()" >Submit Subject</button>
 		<br>
-		
 		<input type="text" id="tea" name="tea" placeholder="Teacher Username">
 		<br>
 		<br>
@@ -69,7 +71,7 @@
 	<br>
 	<br>
 	<div id='onlyDepartment'>
-		<select id="select_department" onchange="onDepartmentChange()">
+		<select id="dd" onchange="onDepartmentChange()">
 		</select>
 		<br><br>
 
@@ -89,7 +91,7 @@
 	</div>
 
 	<div id='onlySubject'>
-		<select id="select_department" onchange="onSubjectChange()" >
+		<select id="ss" onchange="onSubjectChange()" >
 		</select>
 		<br><br>
 		<label id="error2"></label>
@@ -105,8 +107,5 @@
 			</tbody>
 		</table>
 	</div>
-
-
-
 </body>
 </html>
