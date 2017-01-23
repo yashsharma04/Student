@@ -154,7 +154,7 @@
 			var table = document.getElementById("table");
 			var body =  document.getElementById("body");
 			body.innerHTML= "";
-
+			alert(arr.length);
 			if (arr.length==0)
 			{
 				document.getElementById("error").innerText= "Nothing to show";
@@ -171,11 +171,15 @@
 					cell1.innerHTML=department;
 					cell2.innerHTML=arr[i];	
 				}
+				document.getElementById("table").style.display="block";
+				document.getElementById("error").style.display="none";
 			}
 			
 		}
 		function findTeacherBySubject(subject)
 		{	
+			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
+			var arr = [] ;
 			for(var i=0 ; i<teachersArray.length;i++)
 			{
 				for(var j=0;j<teachersArray[i].sub_name.length;j++)
@@ -187,6 +191,7 @@
 					}	
 				}
 			}
+			return arr ; 
 		}
 		function bySubject()
 		{
@@ -213,7 +218,7 @@
 			if (arr.length==0)
 			{
 				document.getElementById("error2").innerText= "Nothing to show";
-				document.getElementById("error").style.display= "block";
+				document.getElementById("error2").style.display= "block";
 				document.getElementById("table2").style.display="none";
 			}
 			else 
