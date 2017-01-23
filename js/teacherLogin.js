@@ -1,14 +1,14 @@
-
 document.addEventListener("DOMContentLoaded", function(event) { 
-	
-	// alert("inside teacher login");
-	console.log("inside teacher login");
 
+	console.log("inside teacher login");
 	if(localStorage.getItem("loggedin")=="admin" || localStorage.getItem("loggedin")=="undefined" || localStorage.getItem("loggedin")=="false" || localStorage.getItem("loggedin")== null)
 	{
 		window.open("login.html","_self");
-		// break ;
 	}
+	else if(localStorage.getItem("loggedin")==0)
+					window.open("onLogin.html","_self");
+	else if(localStorage.getItem("loggedin")==2)
+					window.open("studentLogin.html","_self");
 	else
 	{
 		document.getElementById("name").innerText= localStorage.getItem("username");	
@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				document.getElementById("subjects").innerText= teachersArray[i].sub_name;	
 				document.getElementById("username").innerText= teachersArray[i].user_name;
 				document.getElementById("role").innerText= teachersArray[i].role;
-
 				// personal details 
 				var personalArray = JSON.parse(localStorage.getItem("personalArray"));
+				document.getElementById("teacher_name").innerText= personalArray[i].teacher_name;				
 				document.getElementById("phno").innerText= personalArray[i].phno;				
 				document.getElementById("addr").innerText= personalArray[i].address;
 				document.getElementById("hsc").innerText= personalArray[i].hsc;
@@ -38,29 +38,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}
 		}	
 	}
-	
 });
 
-function addStudent() 
-{
+function addStudent() {
 	window.open("addStudent.html","_self");
 }
-function editDetails() 
-{
-	// alert("HELLO");
+
+function editDetails() {
 	window.open("editTeacher.html","_self");
 }
-function logout() 
-{
-	localStorage.setItem("loggedin","false");
-	window.open("login.html","_self");
-}
-function changePassword()
-{
 
-	document.getElementById("main_content").innerHTML = "";
-	// document.getElementById("main_content")+="";
-	
-
+function changePassword(){
+	//not added yet
 }
 

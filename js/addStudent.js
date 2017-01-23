@@ -7,7 +7,10 @@
 		}
 		else 
 		{
-			
+			if(localStorage.getItem("loggedin")==0)
+					window.open("onLogin.html","_self");
+			else if(localStorage.getItem("loggedin")==2)
+					window.open("studentLogin.html","_self");
 		}
 	}); 
 	function add() 
@@ -109,7 +112,7 @@
 				else 
 				{
 					document.getElementById("error").style.color = "red";
-					document.getElementById("error").innerText= "Only Characters Allowed" ;
+					document.getElementById("error").innerText= "Only Characters Allowed in Name" ;
 				}
 			}
 			else
