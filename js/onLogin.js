@@ -56,7 +56,7 @@
 			document.getElementsByName("dep")[0].style.display="none";
 		}
 		function onSubjectChange(){
-			var subject = document.getElementById("ss").value;
+			var subject = document.getElementById("select_department").value;
 			// alert(department);
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 			// var table = document.createElement();
@@ -130,7 +130,7 @@
 		{	
 			document.getElementById("onlyDepartment").style.display= "block";
 			document.getElementById("onlySubject").style.display= "none";
-			var select= document.getElementById("dd");
+			var select= document.getElementById("select_department");
 			
 			var arr = JSON.parse(localStorage.getItem("arr1"));
 			select.innerHTML="";
@@ -192,7 +192,7 @@
 		{
 			document.getElementById("onlySubject").style.display= "block";
 			document.getElementById("onlyDepartment").style.display= "none";
-			var select = document.getElementById("ss");
+			var select = document.getElementById("select_department");
 			var arr = JSON.parse(localStorage.getItem("subarray"));
 			select.innerHTML="";
 			for(var i =0 ; i<arr.length;i++)
