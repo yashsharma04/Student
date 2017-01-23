@@ -25,12 +25,27 @@
 			
 			if(name!="" && username!="" && password!="" && cpassword!="")
 			{
-				if(onlyCharactersAllowed(name))
+				var flag =0 ;
+				for(var i =0 ; i<len ;i++)
+				{
+					// alert(name.charCodeAt(i));
+					if((name.charCodeAt(i)>64 && name.charCodeAt(i)<92 ) || (name.charCodeAt(i)>96 && name.charCodeAt(i)<123) || (name.charCodeAt(i)==32))
+					{
+
+					}
+					else 
+					{
+						flag = 1; 
+					}
+				}
+				// alert(flag);
+				if(flag==0)
 				{
 					if(password.length>5 && password.length<15)
 					{
 						if (password==cpassword)
 						{
+
 							if(localStorage.getItem("students")=="undefined" ||localStorage.getItem("students")==null  )
 							{
 								var students = [] ;
@@ -48,8 +63,11 @@
 							}
 							else 
 							{
+									
+
 								var students = JSON.parse(localStorage.getItem("students"));
 								var count = 0 ; 
+
 								for(var i=0 ; i<students.length;i++)
 								{
 									if(students[i].username==username)
@@ -66,16 +84,18 @@
 								{
 									var student = {
 
-										"username":username,
-										"name":name,
-										"password":password
+									"username":username,
+									"name":name,
+									"password":password
 									}; 
 									students.push(student);
 									localStorage.setItem("students",JSON.stringify(students));
 									alert("Student Added Successfully");
 									window.open("teacherLogin.html","_self");
 								}
+
 							}
+
 						}
 						else 
 						{	
@@ -100,9 +120,11 @@
 				document.getElementById("error").style.color = "red";
 				document.getElementById("error").innerText="Fields Cant be Empty";
 			}
+		
+			
+		
 	}
-
-function cancel()
-{
-	window.open("teacherLogin.html","_self");
-}
+	function cancel()
+	{
+		window.open("teacherLogin.html","_self");
+	}
