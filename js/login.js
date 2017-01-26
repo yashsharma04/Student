@@ -38,24 +38,29 @@
 		}
 		function checkIfTeacher(username,password){
 
+
 			var count = 0 , flag = 0 ;
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
-			for(var i =0 ;i<teachersArray.length;i++){
-				if(username==teachersArray[i].user_name && password==teachersArray[i].password){
-					return true ;
-				}
+			if(teachersArray!="undefined"){
+					for(var i =0 ;i<teachersArray.length;i++){
+					if(username==teachersArray[i].user_name && password==teachersArray[i].password){
+						return true ;
+					}
+				}	
 			}
 			return false;
 		}
 		function checkIfStudent(username,password){
 
 			var students = JSON.parse(localStorage.getItem("students"));
-			for(var i =0 ;i <students.length ; i++){
+			if(!(students=="undefined" || students==null || students=="null")){
+					for(var i =0 ;i <students.length ; i++){
 
-				if (username==students[i].username && password==students[i].password){
-					return true; 
-				}
-				return false ;
+					if (username==students[i].username && password==students[i].password){
+						return true; 
+					}
+					return false ;
+				}	
 			}
 
 		}

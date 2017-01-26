@@ -1,4 +1,4 @@
-	var givenDepartments = ["Computer Science","Electronics","Mechanical","Civil","Mechatronics","Information Technology","Chemical","BioMed"] ; 
+	
 	document.addEventListener("DOMContentLoaded", function(event) { 	
 
 				if(localStorage.getItem("loggedin")==undefined || localStorage.getItem("loggedin")=="false" )
@@ -26,6 +26,7 @@
 						}
 				}
 		});
+		var givenDepartments = ["Computer Science","Electronics","Mechanical","Civil","Mechatronics","Information Technology","Chemical","BioMed"] ; 
 		function populate()
 		{
 			var datalist = document.getElementById("dep");
@@ -103,13 +104,17 @@
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 			// var table = document.createElement();
 			var arr= [] ;
-			for(var i=0 ; i<teachersArray.length;i++)
-			{
-				if(teachersArray[i].dep_name==department)
+			if(!(teachersArray=="undefined" || teachersArray==null || teachersArray=="null")){
+
+				for(var i=0 ; i<teachersArray.length;i++)
 				{
-					arr.push(teachersArray[i].user_name);
-				}
+					if(teachersArray[i].dep_name==department)
+					{
+						arr.push(teachersArray[i].user_name);
+					}
+				}	
 			}
+			
 			var table = document.getElementById("table");
 			var body =  document.getElementById("body");
 			body.innerHTML= "";
@@ -142,6 +147,7 @@
 			
 			var arr = JSON.parse(localStorage.getItem("arr1"));
 			select.innerHTML="";
+			
 			for(var i =0 ; i<arr.length;i++)
 			{
 				var option = document.createElement("option");
@@ -151,17 +157,24 @@
 
 			var department =arr[0];
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
-			var arr= [] ;
-			for(var i=0 ; i<teachersArray.length;i++)
+			
+			var arr = [] ;
+			// alert(teachersArray);
+			if(!(teachersArray=="undefined" || teachersArray==null || teachersArray=="null"))
 			{
-				if(teachersArray[i].dep_name==department)
+				for(var i=0 ; i<teachersArray.length;i++)
 				{
-					arr.push(teachersArray[i].user_name);
+					if(teachersArray[i].dep_name==department)
+					{
+						arr.push(teachersArray[i].user_name);
+					}
 				}
+				var table = document.getElementById("table");
+				var body =  document.getElementById("body");
+				body.innerHTML= "";
 			}
-			var table = document.getElementById("table");
-			var body =  document.getElementById("body");
-			body.innerHTML= "";
+			
+			
 			if (arr.length==0)
 			{
 				document.getElementById("error").innerText= "Nothing to show";
@@ -187,17 +200,21 @@
 		{	
 			var teachersArray = JSON.parse(localStorage.getItem("teachersArray"));
 			var arr = [] ;
-			for(var i=0 ; i<teachersArray.length;i++)
-			{
-				for(var j=0;j<teachersArray[i].sub_name.length;j++)
-				{
-					if(teachersArray[i].sub_name[j]==subject)
-					{
+			if(!(teachersArray=="undefined" || teachersArray==null || teachersArray=="null")){
 
-						arr.push(teachersArray[i].user_name);
-					}	
-				}
+				for(var i=0 ; i<teachersArray.length;i++)
+				{
+					for(var j=0;j<teachersArray[i].sub_name.length;j++)
+					{
+						if(teachersArray[i].sub_name[j]==subject)
+						{
+
+							arr.push(teachersArray[i].user_name);
+						}	
+					}
+				}	
 			}
+			
 			return arr ; 
 		}
 		function bySubject()
@@ -358,14 +375,14 @@
 				}
 			}
 		}
-		function dep() 
+		function showDepartments() 
 		{
 			changeToNone();
 			// document.getElementById("dep").style.display= "block" ;
 			document.getElementById("subd").style.display= "block" ;
 			document.getElementsByName("dep")[0].style.display="block";
 		}
-		function tea()
+		function showTeachers()
 		{
 			changeToNone();
 			document.getElementById("tea").style.display= "block" ;
@@ -402,7 +419,7 @@
 			}
 			
 		}
-		function sub()
+		function showSubjects()
 		{
 			changeToNone();
 			document.getElementById("sub").style.display= "block" ;
@@ -418,12 +435,10 @@
 				select.appendChild(option);
 			}
 		}
-		function subd() 
+		function submitDepartment() 
 		{
 
 			var department =document.getElementsByName("dep")[0].value;
-
-
 			if(department.trim()==""){
 				alert("Field Empty");
 			}
@@ -463,7 +478,7 @@
 				}
 			}
 		}
-		function subt(){
+		function submitTeacher(){
 			if (localStorage.getItem("teachersArray") ==undefined){
 				var teacher_name = document.getElementById("tea").value;
 				if(""==teacher_name.trim()){
@@ -569,7 +584,7 @@
 			}
 			return false;
 		}
-		function subs()
+		function submitStudent()
 		{
 			var subjectValue  = document.getElementById("sub").value ;
 			if(""==subjectValue.trim()){
